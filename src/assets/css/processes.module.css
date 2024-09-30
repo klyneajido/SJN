@@ -1,0 +1,18 @@
+.processContainer{
+    border: 2px solid red;  
+}
+.tableContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.process{
+    border: 2px solid blue;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 20px;
+    padding: 10px;
+
+}
