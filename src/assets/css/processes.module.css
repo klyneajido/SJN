@@ -1,18 +1,16 @@
-.processContainer{
-    border: 2px solid red;  
-}
 .tableContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
+    margin:20px;
 }
-.process{
-    border: 2px solid blue;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-right: 20px;
-    padding: 10px;
+table,th, tr, td{
+    border: 2px solid #FFAD60;
+    border-collapse: collapse;
+}
+table{
 
+    background-color: #A66E38;
+}
+td, th{
+text-align: center;
+padding:10px  15px;
+color:#FFEEAD;
 }

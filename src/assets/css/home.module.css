@@ -1,24 +1,57 @@
-.mainContainer{
-    border: 2px solid red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.inputContainer{
-    margin-bottom: 10px;
-    border: 2px solid red;
-    display: flex;
-    flex-direction: column;
-    padding:5px;
-    justify-content: center;
+form  { display: table;      }
+p     { display: table-row;  }
+label { display: table-cell; }
+input { display: table-cell; }
 
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.arrivalTime, .burstTime{
+.container{
+  display: flex;
+  flex-direction: row;
+}
+.title{
+    font-size: 50px;
+    color:  #FFEEAD;
+}
+.inputContainer {
+  margin-bottom: 10px;
+}
+.at{
+    margin-bottom: 10px;
+}
+form{
     display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #A66E38;
+    padding: 20px;
+    margin-bottom: 20px;
 }
-input{
-    max-width: 80px;
+label{
+    text-align: left;
+    color: #FFEEAD;
+}
+input {
+  width: 150px;
+  margin:10px;
+  padding: 10px;
+  border-radius: 10px;
+  border-style: none;
+  color:#A66E38;
+  background-color: #FFAD60;
+  font-family: "Fredoka", sans-serif;
+  font-size: 20px;
+}
+.addProcessBtn{
+    padding:15px 20px;
+    background-color: #FFAD60;
+    border-radius: 40px;
+    margin-bottom: 10px;
+    border-style: none;
+    color: #A66E38;
+    font-size: 20px;
 }
