@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Chart } from "react-google-charts";
 import styles from "../assets/css/ganttChart.module.css";
-export default function GanttChart({ processes }) {
-  const [ganttChartData, setGanttChartData] = useState([]);
+export default function GanttChart({ processes, ganttChartData, setGanttChartData }) {
 
   function generateGanttChart() {
     let currentTime = 0;
@@ -74,8 +73,6 @@ export default function GanttChart({ processes }) {
     setGanttChartData(chartData);
   }
   
-  
-
   // Helper function to generate Date object from seconds (as needed by Google Charts)
   function getDate(seconds) {
     const baseDate = new Date(0); // Epoch time

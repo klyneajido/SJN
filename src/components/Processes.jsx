@@ -1,8 +1,18 @@
-import styles from '../assets/css/processes.module.css'
-export default function Processes({ processes }) {
+import styles from "../assets/css/processes.module.css";
+export default function Processes({ processes, handleClearTable }) {
+  const isScrollable = processes.length > 10;
   return (
     <div className={styles.tableContainer}>
-              <table>
+      <div className={styles.tableBtnContainer}>
+        <button
+          className={styles.clearProcessTableBtn}
+          onClick={handleClearTable}
+        >
+          Clear Table
+        </button>
+      </div>
+
+      <table>
         <thead>
           <tr>
             <th>Process</th>
@@ -10,7 +20,7 @@ export default function Processes({ processes }) {
             <th>Burst Time</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={isScrollable ? styles.scrollableTbody : ""}>
           {processes.map((process) => (
             <tr key={process.process}>
               <td>P{process.process}</td>

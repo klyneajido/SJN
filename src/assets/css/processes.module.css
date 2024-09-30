@@ -1,16 +1,75 @@
-.tableContainer{
-    margin:20px;
+.tableContainer {
+  width: 330px;
+  margin: auto;
+  display: grid;
+  row-gap: 3px;
 }
-table,th, tr, td{
-    border: 2px solid #FFAD60;
-    border-collapse: collapse;
-}
-table{
 
-    background-color: #A66E38;
+.clearProcessTableBtn {
+  padding: 5px 20px;
+  border-radius: 20px;
+  border-style: none;
+  background-color: #a66e38;
+  color: #ffeead;
+  display: inline;
+  float: right;
 }
-td, th{
-text-align: center;
-padding:10px  15px;
-color:#FFEEAD;
+
+table {
+  background-color: #a66e38;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+thead th {
+  text-align: center;
+  padding: 10px 15px 10px 3px;
+  color: #ffeead;
+  background-color: #a66e38;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+tbody td {
+  text-align: center;
+  padding: 10px 15px;
+  color: #ffeead;
+  border: 2px solid #ffad60;
+  border-bottom: none;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #a66e38; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffeead; 
+  border-radius: 5px;
+  }
+
+.scrollableTbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollableTbody tr {
+  display: table;
+  table-layout: fixed;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border: 2px solid #ffad60;
+  border-bottom: none;
 }

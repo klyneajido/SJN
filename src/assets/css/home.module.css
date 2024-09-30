@@ -41,10 +41,13 @@ input {
   padding: 10px;
   border-radius: 10px;
   border-style: none;
-  color:#A66E38;
+  color:#a66e38;
   background-color: #FFAD60;
   font-family: "Fredoka", sans-serif;
   font-size: 20px;
+}
+::placeholder {
+  color: rgba(166, 109, 56, 0.5);
 }
 .addProcessBtn{
     padding:15px 20px;

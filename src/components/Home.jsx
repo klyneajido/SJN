@@ -1,11 +1,15 @@
 import { useState } from "react";
 import Processes from "./Processes";
 import GanttChart from "./GanttChart";
+import CustomAlert from "./CustomAlert";
 import styles from "../assets/css/home.module.css";
 export default function Home() {
   const [processes, setProcesses] = useState([]);
   const [arrivalTime, setArrivalTime] = useState("");
   const [burstTime, setBurstTime] = useState("");
+  const [ganttChartData, setGanttChartData] = useState([]);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  
 
   function handleAddProcess() {
     event.preventDefault();
@@ -39,6 +43,24 @@ export default function Home() {
   function handleBurstTimeChange(e) {
     setBurstTime(e.target.value);
   }
+
+  function handleClearTable() {
+    setAlertOpen(true);
+  }
+
+  const handleClearTableConfirmClear = () => {
+    setProcesses([]); 
+    setGanttChartData([]);
+  };
+
+  const handleClearTableCloseAlert = () => {
+    setAlertOpen(false); 
+  };
+
+  const alertButtons = [
+    { text: "Yes", onPress: handleClearTableConfirmClear },
+    { text: "No", onPress: handleClearTableCloseAlert },
+  ];
   return (
     <div className={styles.mainContainer}>
       <h2 className={styles.title}>Shortest Job Next!</h2>
@@ -50,6 +72,7 @@ export default function Home() {
             <input
               className="at"
               type="text"
+              placeholder="e.g. 1 2 3 ..."
               value={arrivalTime}
               onChange={(e) => handleArrivalTimeChange(e)}
             />
@@ -60,6 +83,7 @@ export default function Home() {
             <input
               className="bt"
               type="text"
+              placeholder="e.g. 1 2 3 ..."
               value={burstTime}
               onChange={(e) => handleBurstTimeChange(e)}
             />
@@ -69,8 +93,17 @@ export default function Home() {
           Add Processes
         </button>
       </form>
-      <Processes processes={processes} />
-      <GanttChart processes={processes} />
+      <Processes processes={processes} handleClearTable={handleClearTable}/>
+      <GanttChart processes={processes} ganttChartData={ganttChartData} setGanttChartData={setGanttChartData}/>
+
+      {isAlertOpen && (
+        <CustomAlert
+          title="Clear Table?"
+          message="Clearing the Process Table will also clear the Gantt Chart."
+          buttons={alertButtons}
+          onClose={handleClearTableCloseAlert}
+        />
+      )}
     </div>
   );
 }
