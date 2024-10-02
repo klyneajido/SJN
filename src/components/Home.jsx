@@ -5,12 +5,11 @@ import CustomAlert from "./CustomAlert";
 import styles from "../assets/css/home.module.css";
 export default function Home() {
   const [processes, setProcesses] = useState([]);
-  const [arrivalTime, setArrivalTime] = useState("");
-  const [burstTime, setBurstTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("2 8 14 20 26"); //Sample Input
+  const [burstTime, setBurstTime] = useState("5 2 6 3 4"); //Sample Input
   const [ganttChartData, setGanttChartData] = useState([]);
   const [isAlertOpen, setAlertOpen] = useState(false);
   
-
   function handleAddProcess() {
     event.preventDefault();
     const arrivalTimes = arrivalTime.split(" ").map(Number);

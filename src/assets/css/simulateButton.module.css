@@ -1,0 +1,17 @@
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.simulateBtn{
+    padding: 5px 20px;
+    background-color: #A66E38;
+    border-radius: 40px;
+    margin-bottom: 20px;
+    border: none;
+    color: #FFEEAD;
+    font-size: 15px;
+    cursor: pointer;
+    max-width: 300px;
+    transition: background-color 0.3s ease;
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Chart } from "react-google-charts";
 import styles from "../assets/css/ganttChart.module.css";
+import SimulateButton from "./SimulateButton";
 export default function GanttChart({ processes, ganttChartData, setGanttChartData }) {
 
   function generateGanttChart() {
@@ -101,7 +102,10 @@ export default function GanttChart({ processes, ganttChartData, setGanttChartDat
   return (
     <div className={styles.mainContainer}>
       <button onClick={generateGanttChart} className={styles.generateBtn}>Generate Gantt Chart</button>
+      <div className={styles.titleContainer}>
       <h2>Gantt Chart</h2>
+      <SimulateButton/>
+      </div>
 
       {ganttChartData.length > 0 && (
        <div  className={styles.ganttChartContainer}>
