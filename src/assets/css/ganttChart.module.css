@@ -1,10 +1,5 @@
 .mainContainer {
-  margin: 20px;
-  margin-right: 30px;
-  margin-left: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
 }
 .titleContainer {
   display: flex;
@@ -18,18 +13,41 @@ h2 {
   margin-bottom: 20px;
 }
 
-.ganttChartContainer {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 10px;
-  margin-top: 20px;
-  box-sizing: border-box;
+.svgContainer {
+max-width: 800px;
+overflow: auto;
+}
+svg{
+  border: 2px solid red;
+
+}
+Array{
+  border: 2px solid red;
+}
+.processCell {
+  fill: #a66e38;
+  stroke: #2b6cb0;
 }
 
-.ganttChart {
-  min-width: 1200px;
+.idleCell {
+  fill: #f0f0f0;
+  stroke: #718096;
+}
+
+.cellText {
+  fill: black;
+  font-size: 14px;
+}
+
+.timelineLine {
+  stroke: black;
+  stroke-width: 0.5;
+
+}
+
+.timelineText {
+  fill: black;
+  font-size: 20px;
 }
 
 .generateBtn {
