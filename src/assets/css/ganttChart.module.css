@@ -1,32 +1,38 @@
 .mainContainer {
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top:20px;
+  margin-bottom:20px;
+  border:2px solid blue;
+  width:100vw;
 }
 .titleContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   min-width: 400px;
+  border:2px solid red;
+  width:80%;
 }
 h2 {
   color: #ffeead;
   font-size: 30px;
   margin-bottom: 20px;
 }
-
+.ganttChartContainer{
+  width:80%;
+}
 .svgContainer {
-max-width: 800px;
-overflow: auto;
+  
+  overflow: auto;
+  border:2px solid green;
 }
-svg{
-  border: 2px solid red;
 
-}
-Array{
-  border: 2px solid red;
-}
 .processCell {
   fill: #a66e38;
-  stroke: #2b6cb0;
+  stroke: #ebf0f5;
 }
 
 .idleCell {
@@ -42,7 +48,6 @@ Array{
 .timelineLine {
   stroke: black;
   stroke-width: 0.5;
-
 }
 
 .timelineText {
@@ -64,5 +69,22 @@ Array{
 }
 
 .generateBtn:hover {
+  background-color: #8b5e2b;
+}
+
+.simulateBtn {
+  padding: 5px 20px;
+  background-color: #a66e38;
+  border-radius: 40px;
+  margin-bottom: 20px;
+  border: none;
+  color: #ffeead;
+  font-size: 15px;
+  cursor: pointer;
+  max-width: 300px;
+  transition: background-color 0.3s ease;
+}
+
+.simulateBtn:hover {
   background-color: #8b5e2b;
 }
