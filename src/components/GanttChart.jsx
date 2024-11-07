@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import styles from "../assets/css/ganttChart.module.css";
+import Simulation from "./Simulation";
 
-export default function GanttChart({
+const GanttChart = ({
   processes,
   ganttChartData,
   setGanttChartData,
-}) {
+}) => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [queue, setQueue] = useState([]);
   const [completedProcesses, setCompletedProcesses] = useState([]);
 
+  // Function to generate the Gantt chart based on the processes
   function generateGanttChart() {
     let currentTime = 0;
     let queue = [];
@@ -20,7 +22,6 @@ export default function GanttChart({
       (a, b) => a.arrivalTime - b.arrivalTime
     );
 
-    // Check if the first process arrives after time 0 (Initial Idle Time)
     if (sortedByArrival.length > 0 && sortedByArrival[0].arrivalTime > 0) {
       chartData.push({
         label: "X",
@@ -31,7 +32,6 @@ export default function GanttChart({
     }
 
     while (sortedByArrival.length > 0 || queue.length > 0) {
-      // Add arriving processes to the queue
       while (
         sortedByArrival.length > 0 &&
         sortedByArrival[0].arrivalTime <= currentTime
@@ -40,11 +40,9 @@ export default function GanttChart({
       }
 
       if (queue.length > 0) {
-        // Sort the queue by burst time (for Shortest Job Next)
         queue.sort((a, b) => a.burstTime - b.burstTime);
         const nextProcess = queue.shift();
 
-        // Handle Idle Time between processes if needed
         if (currentTime < nextProcess.arrivalTime) {
           chartData.push({
             label: "X",
@@ -54,7 +52,6 @@ export default function GanttChart({
           currentTime = nextProcess.arrivalTime;
         }
 
-        // Add the next process to the Gantt chart
         chartData.push({
           label: `P${nextProcess.process}`,
           start: currentTime,
@@ -62,14 +59,17 @@ export default function GanttChart({
         });
         currentTime += nextProcess.burstTime;
       } else {
-        // If no process is ready, increment the time (i.e., idle state)
-        const nextArrival = sortedByArrival[0].arrivalTime;
-        chartData.push({
-          label: "X",
-          start: currentTime,
-          end: nextArrival,
-        });
-        currentTime = nextArrival;
+        const nextArrival = sortedByArrival[0]?.arrivalTime;
+        if (nextArrival !== undefined) {
+          chartData.push({
+            label: "X",
+            start: currentTime,
+            end: nextArrival,
+          });
+          currentTime = nextArrival;
+        } else {
+          break;
+        }
       }
     }
 
@@ -87,7 +87,7 @@ export default function GanttChart({
           }
           return nextTime;
         });
-      }, 1000);
+      }, 800);
 
       return () => clearInterval(timer);
     }
@@ -100,6 +100,7 @@ export default function GanttChart({
     }
   }, [currentTime, isSimulating]);
 
+  // Update queue and completed processes
   const updateQueue = () => {
     const arrivingProcesses = processes.filter(
       (p) => p.arrivalTime === currentTime
@@ -109,13 +110,23 @@ export default function GanttChart({
 
   const updateCompletedProcesses = () => {
     const newCompletedProcesses = ganttChartData.filter(
-      (item) => item.end === currentTime && item.label !== 'X'
+      (item) => item.end === currentTime && item.label !== "X"
     );
-    setCompletedProcesses((prev) => [...prev, ...newCompletedProcesses]);
+
+    if (newCompletedProcesses.length > 0) {
+      setCompletedProcesses((prev) => [...prev, ...newCompletedProcesses]);
+    }
+
     setQueue((prevQueue) =>
-      prevQueue.filter(
-        (p) => !newCompletedProcesses.some((cp) => cp.label === `P${p.process}`)
-      )
+      prevQueue.map((p) => {
+        const completedProcess = newCompletedProcesses.find(
+          (cp) => cp.label === `P${p.process}`
+        );
+        if (completedProcess) {
+          return { ...p, completed: true };
+        }
+        return p;
+      })
     );
   };
 
@@ -131,24 +142,66 @@ export default function GanttChart({
       <h3>Queue</h3>
       <ul>
         {queue.map((process, index) => (
-          <li key={index} className={styles.queueItem}>
+          <li
+            key={index}
+            className={`${styles.queueItem} ${
+              process.completed ? styles.completedProcess : ""
+            }`}
+          >
             P{process.process}
           </li>
         ))}
       </ul>
     </div>
   );
-
-  const GanttChartSVG = ({ data }) => {
+  const GanttChartSVG = ({ data, currentTime }) => {
+    const containerRef = useRef(null); // Reference to the scrollable container
     const cellWidth = 50;
     const cellHeight = 40;
     const totalTime = data[data.length - 1].end;
     const margin = { left: 25, right: 25 };
     const svgWidth = (totalTime + 1) * cellWidth;
     const borderRadius = 10;
-
+    const [scrollPosition, setScrollPosition] = useState(0);  // Track scroll position state
+  
+    const smoothScroll = () => {
+      if (containerRef.current) {
+        const targetScrollPos = currentTime * cellWidth - containerRef.current.offsetWidth / 2;
+        const maxScroll = svgWidth - containerRef.current.offsetWidth;
+        const finalScrollPos = Math.min(Math.max(targetScrollPos, 0), maxScroll);
+  
+        // Only set scroll position if it has changed, to avoid unnecessary reflows
+        if (scrollPosition !== finalScrollPos) {
+          setScrollPosition(finalScrollPos);  // Update scroll position only when needed
+        }
+      }
+    };
+  
+    useEffect(() => {
+      if (currentTime !== 0) {
+        // Request smooth scroll at the next animation frame
+        requestAnimationFrame(smoothScroll);
+      }
+    }, [currentTime, scrollPosition]); // Update scroll position when currentTime changes
+  
+    useEffect(() => {
+      // Apply the scroll position when it's updated
+      if (containerRef.current && scrollPosition !== 0) {
+        containerRef.current.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth',  // Ensure smooth scrolling
+        });
+      }
+    }, [scrollPosition]);  // Only apply scroll when the position is updated
+  
     return (
-      <div className={styles.svgContainer}>
+      <div
+        className={styles.svgContainer}
+        ref={containerRef}
+        style={{
+          overflowX: isSimulating ? 'hidden' : 'auto',  // Conditionally hide or show scrollbar
+        }}
+      >
         <svg width={svgWidth} height={cellHeight * 2}>
           <g transform={`translate(${margin.left}, 0)`}>
             {data.map((item, index) => (
@@ -160,18 +213,11 @@ export default function GanttChart({
                   height={cellHeight}
                   rx={borderRadius}
                   ry={borderRadius}
-                  className={
-                    item.label === "X" ? styles.idleCell : styles.processCell
-                  }
-                  style={{
-                    fillOpacity: isSimulating && currentTime >= item.start ? 1 : 0.3,
-                  }}
+                  className={item.label === "X" ? styles.idleCell : styles.processCell}
+                  style={{ fillOpacity: currentTime >= item.start ? 1 : 0.3 }}
                 />
                 <text
-                  x={
-                    item.start * cellWidth +
-                    ((item.end - item.start) * cellWidth) / 2
-                  }
+                  x={item.start * cellWidth + (item.end - item.start) * cellWidth / 2}
                   y={cellHeight / 2}
                   textAnchor="middle"
                   dominantBaseline="middle"
@@ -181,7 +227,7 @@ export default function GanttChart({
                 </text>
               </g>
             ))}
-            {isSimulating && (
+            {currentTime !== 0 && (
               <line
                 x1={currentTime * cellWidth}
                 y1={0}
@@ -216,6 +262,8 @@ export default function GanttChart({
       </div>
     );
   };
+  
+  
 
   return (
     <div className={styles.mainContainer}>
@@ -233,26 +281,30 @@ export default function GanttChart({
 
       {ganttChartData.length > 0 && (
         <div className={styles.ganttChartContainer}>
-          <GanttChartSVG data={ganttChartData} />
+         <GanttChartSVG data={ganttChartData} currentTime={currentTime} />
+
         </div>
       )}
 
       {isSimulating && (
-        <div className={styles.simulationContainer}>
-          <div className={styles.timeDisplay}>Current Time: {currentTime}</div>
-          <QueueChart />
-          <div className={styles.completedProcesses}>
-            <h3>Completed Processes</h3>
-            <ul>
-              {completedProcesses.map((process, index) => (
-                <li key={index} className={styles.completedItem}>
-                  {process.label}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <Simulation
+          currentTime={currentTime}
+          queue={queue}
+          completedProcesses={completedProcesses}
+          setIsSimulating={setIsSimulating}
+        />
+      )}
+
+      {completedProcesses.length > 0 && !isSimulating && (
+        <Simulation
+          currentTime={currentTime}
+          queue={queue}
+          completedProcesses={completedProcesses}
+          setIsSimulating={setIsSimulating}
+        />
       )}
     </div>
   );
-}
+};
+
+export default GanttChart;

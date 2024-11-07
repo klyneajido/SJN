@@ -1,88 +1,106 @@
 import React, { useEffect, useState } from "react";
-import styles from "../assets/css/ganttChart.module.css";
+import styles from "../assets/css/simulation.module.css";
+  
 
-export default function Simulation({
+const Simulation = ({
   processes,
   ganttChartData,
   isSimulating,
   setIsSimulating,
   queue,
   setQueue,
-  completedProcesses,
-  setCompletedProcesses,
-}) {
-  const [currentTime, setCurrentTime] = useState(0);
+  currentTime,
+  setCurrentTime,
+}) => {
+  const [showQueueTable, setShowQueueTable] = useState(true);
+  const [simulationEnded, setSimulationEnded] = useState(false); // State to track if simulation has ended
 
   useEffect(() => {
+    let timer;
     if (isSimulating) {
-      const timer = setInterval(() => {
+      timer = setInterval(() => {
         setCurrentTime((prevTime) => {
           const nextTime = prevTime + 1;
+          // Stop simulation when the current time exceeds the last gantt chart entry
           if (nextTime > ganttChartData[ganttChartData.length - 1].end) {
             clearInterval(timer);
             setIsSimulating(false);
+            setSimulationEnded(true); // Mark the simulation as ended
+            return prevTime; // Return the previous time to prevent unnecessary state update
           }
           return nextTime;
         });
       }, 1000);
 
-      return () => clearInterval(timer);
+      return () => clearInterval(timer); // Cleanup the interval when the component is unmounted or isSimulating changes
     }
-  }, [isSimulating, ganttChartData]);
+  }, [isSimulating, ganttChartData, setCurrentTime]);
 
   useEffect(() => {
     if (isSimulating) {
       updateQueue();
-      updateCompletedProcesses();
     }
-  }, [currentTime, isSimulating]);
+  }, [currentTime, isSimulating, ganttChartData, queue, setQueue]); // Now `currentTime` and `ganttChartData` are part of the dependency array
 
   const updateQueue = () => {
     const arrivingProcesses = processes.filter(
       (p) => p.arrivalTime === currentTime
     );
-    setQueue((prevQueue) => [...prevQueue, ...arrivingProcesses]);
+
+    // Only add arriving processes if they are new to the queue
+    const newQueue = [...queue, ...arrivingProcesses.filter(p => !queue.some(q => q.process === p.process))];
+
+    const updatedQueue = newQueue.map((p) => {
+      const isProcessCompleted = ganttChartData.some(
+        (item) => item.end === currentTime && item.label === `P${p.process}`
+      );
+      return {
+        ...p,
+        completed: p.completed || isProcessCompleted, // Keep process completed if it's marked done
+      };
+    });
+
+    setQueue(updatedQueue);
   };
 
-  const updateCompletedProcesses = () => {
-    const newCompletedProcesses = ganttChartData.filter(
-      (item) => item.end === currentTime && item.label !== "X"
-    );
-    setCompletedProcesses((prev) => [...prev, ...newCompletedProcesses]);
-    setQueue((prevQueue) =>
-      prevQueue.filter(
-        (p) => !newCompletedProcesses.some((cp) => cp.label === `P${p.process}`)
-      )
-    );
-  };
-
-  const QueueChart = () => (
-    <div className={styles.queueChart}>
-      <h3>Queue</h3>
-      <ul>
-        {queue.map((process, index) => (
-          <li key={index} className={styles.queueItem}>
-            P{process.process}
-          </li>
-        ))}
-      </ul>
+  const QueueTable = () => (
+    <div className={`${styles.queueTableContainer} ${showQueueTable ? '' : styles.hidden}`}>
+      <div className={styles.queueTableHeader}>
+        <h3>Queue</h3>
+      </div>
+      <table className={styles.queueTable}>
+        <tbody>
+          <tr>
+            {queue.map((process, index) => (
+              <td
+                key={index}
+                className={process.completed ? styles.completedProcess : ""}
+              >
+                P{process.process}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 
   return (
     <div className={styles.simulationContainer}>
-      <div className={styles.timeDisplay}>Current Time: {currentTime}</div>
-      <QueueChart />
-      <div className={styles.completedProcesses}>
-        <h3>Completed Processes</h3>
-        <ul>
-          {completedProcesses.map((process, index) => (
-            <li key={index} className={styles.completedItem}>
-              {process.label}
-            </li>
-          ))}
-        </ul>
+      <div className={styles.header}>
+        <h2>Gantt Chart Simulation</h2>
+        <div className={styles.timeDisplay}>Current Time: {currentTime}</div>
       </div>
+      <div className={styles.chartContainer}>
+        <QueueTable />
+      </div>
+      {simulationEnded && (
+        <div className={styles.simulationEndedMessage}>
+          Simulation has ended.
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Simulation;
