@@ -6,7 +6,7 @@
   margin-top:20px;
   margin-bottom:20px;
   border:2px solid blue;
-  width:100vw;
+  width:100%;
 }
 .titleContainer {
   display: flex;

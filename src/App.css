@@ -3,6 +3,22 @@
     margin:0;
     padding:0;
 }
-body{
-    background-color: #FFAD60;
+body {
+    background-color: #ffad60;
+    background-image: url('assets\img\sjn-bg.jpg'); /* Replace with your background image */
+    background-size: cover; /* Cover the whole area */
+    background-size: 120% auto;
+    animation: moveBackground 50s linear infinite; /* Loop the animation */
+  }
+  
+  @keyframes moveBackground {
+    0% {
+        background-position: 0 0; /* Start position (left) */
+    }
+    50% {
+        background-position: -100% 0; /* Middle position (right) */
+    }
+    100% {
+        background-position: 0 0; /* End position (back to left) */
+    }
 }
