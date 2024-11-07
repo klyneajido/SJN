@@ -1,6 +1,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import styles from "../assets/css/ganttChart.module.css";
 import Simulation from "./Simulation";
+import Computations from "./Computations";
 
 const GanttChart = ({
   processes,
@@ -303,6 +304,8 @@ const GanttChart = ({
           setIsSimulating={setIsSimulating}
         />
       )}
+      <Computations processes={processes} ganttChartData={ganttChartData} />
+
     </div>
   );
 };
