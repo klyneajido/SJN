@@ -25,7 +25,7 @@ export default function Home() {
       alert("Please enter valid numbers for Arrival and Burst Times.");
       return false;
     }
-    
+
     // Check if values are non-negative
     if (arrivalTime < 0 || burstTime < 0) {
       alert("Arrival Time and Burst Time must be non-negative numbers.");
@@ -47,7 +47,9 @@ export default function Home() {
     const burstTimes = burstTime.split(" ").map(Number);
 
     if (arrivalTimes.length !== burstTimes.length) {
-      alert("Arrival Times and Burst Times should have the same number of values");
+      alert(
+        "Arrival Times and Burst Times should have the same number of values"
+      );
       return;
     }
     if (arrivalTimes.some(isNaN) || burstTimes.some(isNaN)) {
@@ -97,9 +99,9 @@ export default function Home() {
       .filter((p) => p.process !== processToDelete.process)
       .map((p, index) => ({
         ...p,
-        process: index + 1
+        process: index + 1,
       }));
-    
+
     setProcesses(updatedProcesses);
     setDeleteAlertOpen(false);
     setProcessToDelete(null);
@@ -120,9 +122,9 @@ export default function Home() {
   };
 
   const handleEditInputChange = (field, value) => {
-    setEditValues(prev => ({
+    setEditValues((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -134,12 +136,12 @@ export default function Home() {
       return;
     }
 
-    const updatedProcesses = processes.map(p => 
+    const updatedProcesses = processes.map((p) =>
       p.process === processToEdit.process
         ? {
             ...p,
             arrivalTime: newArrivalTime,
-            burstTime: newBurstTime
+            burstTime: newBurstTime,
           }
         : p
     );
@@ -166,52 +168,54 @@ export default function Home() {
 
   return (
     <div className={styles.mainContainer}>
-      {/* <h2 className={styles.title}>Shortest Job Next!</h2> */}
+      <h2 className={styles.title}>Shortest Job Next!</h2>
+      <div className={styles.contentContainer}>
+        <div className={styles.leftContainer}>
+          <form>
+            <div className={styles.inputContainer}>
+              <p>
+                <label>Arrival Time: </label>{" "}
+                <input
+                  className="at"
+                  type="text"
+                  placeholder="e.g. 1 2 3 ..."
+                  value={arrivalTime}
+                  onChange={(e) => handleArrivalTimeChange(e)}
+                />
+              </p>
 
-      <form> 
-        <div className={styles.inputContainer}>
-          <p>
-            <label>Arrival Time: </label>{" "}
-            <input
-              className="at"
-              type="text"
-              placeholder="e.g. 1 2 3 ..."
-              value={arrivalTime}
-              onChange={(e) => handleArrivalTimeChange(e)}
-            />
-          </p>
+              <p>
+                <label>Burst Time: </label>
+                <input
+                  className="bt"
+                  type="text"
+                  placeholder="e.g. 1 2 3 ..."
+                  value={burstTime}
+                  onChange={(e) => handleBurstTimeChange(e)}
+                />
+              </p>
+            </div>
+            <button className={styles.addProcessBtn} onClick={handleAddProcess}>
+              Add Processes
+            </button>
+          </form>
 
-          <p>
-            <label>Burst Time: </label>
-            <input
-              className="bt"
-              type="text"
-              placeholder="e.g. 1 2 3 ..."
-              value={burstTime}
-              onChange={(e) => handleBurstTimeChange(e)}
-            />
-          </p>
+          <Processes
+            processes={processes}
+            handleClearTable={handleClearTable}
+            handleDeleteProcess={handleDeleteProcess}
+            handleEditProcess={handleEditProcess}
+          />
         </div>
-        <button className={styles.addProcessBtn} onClick={handleAddProcess}>
-          Add Processes
-        </button>
-      </form>
-      
-      <div className={styles.outputContainer}>
-      <Processes 
-        processes={processes} 
-        handleClearTable={handleClearTable}
-        handleDeleteProcess={handleDeleteProcess}
-        handleEditProcess={handleEditProcess}
-      />
-      
-      <GanttChart 
-        processes={processes} 
-        ganttChartData={ganttChartData} 
-        setGanttChartData={setGanttChartData}
-      />
+
+        <div className={styles.rightContainer}>
+          <GanttChart
+            processes={processes}
+            ganttChartData={ganttChartData}
+            setGanttChartData={setGanttChartData}
+          />
+        </div>
       </div>
-      
 
       {isAlertOpen && (
         <CustomAlert
@@ -243,7 +247,9 @@ export default function Home() {
                 <input
                   type="number"
                   value={editValues.arrivalTime}
-                  onChange={(e) => handleEditInputChange('arrivalTime', e.target.value)}
+                  onChange={(e) =>
+                    handleEditInputChange("arrivalTime", e.target.value)
+                  }
                   min="0"
                 />
               </div>
@@ -252,22 +258,18 @@ export default function Home() {
                 <input
                   type="number"
                   value={editValues.burstTime}
-                  onChange={(e) => handleEditInputChange('burstTime', e.target.value)}
+                  onChange={(e) =>
+                    handleEditInputChange("burstTime", e.target.value)
+                  }
                   min="1"
                 />
               </div>
             </div>
             <div className={styles.modalFooter}>
-              <button 
-                className={styles.updateBtn}
-                onClick={handleEditConfirm}
-              >
+              <button className={styles.updateBtn} onClick={handleEditConfirm}>
                 Update
               </button>
-              <button 
-                className={styles.cancelBtn}
-                onClick={handleEditCancel}
-              >
+              <button className={styles.cancelBtn} onClick={handleEditCancel}>
                 Cancel
               </button>
             </div>

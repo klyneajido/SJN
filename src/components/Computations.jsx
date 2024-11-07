@@ -1,3 +1,5 @@
+import styles from "../assets/css/computations.module.css";
+
 export default function Computations({ processes, ganttChartData }) {
     // Calculate CPU Utilization
     const totalBurstTime = processes.reduce((acc, process) => acc + process.burstTime, 0);
@@ -40,12 +42,13 @@ export default function Computations({ processes, ganttChartData }) {
   
     return (
       <div>
-        <h3>Computations</h3>
-        <p><strong>CPU Utilization:</strong> {cpuUtilization}%</p>
-        <p><strong>Throughput (THR):</strong> {throughput}</p>
-        <p><strong>Average Waiting Time (AWT):</strong> {awt} ms</p>
-        <p><strong>Average Turnaround Time (ATAT):</strong> {atat} ms</p>
-  
+        <hr />
+        <h1 className={styles.title}>Computations</h1>
+        <p><strong>CPU Utilization: </strong> {cpuUtilization}%</p>
+        <p><strong>Throughput (THR): </strong> {throughput}</p>
+        <p><strong>Average Waiting Time (AWT): </strong> {awt} ms</p>
+        <p><strong>Average Turnaround Time (ATAT): </strong> {atat} ms</p>
+        <br></br>
         <h4>Waiting Time (WT) Computation</h4>
         <table border="1">
           <thead>
@@ -67,7 +70,7 @@ export default function Computations({ processes, ganttChartData }) {
             ))}
           </tbody>
         </table>
-  
+        <br></br>
         <h4>Turnaround Time (TAT) Computation</h4>
         <table border="1">
           <thead>

@@ -1,44 +1,44 @@
+hr {
+  color: #ffeead;
+  background-color: #ffeead;
+  border: none;
+  border-top: 2px solid #ffeead; 
+}
 .mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top:20px;
-  margin-bottom:20px;
-  border:2px solid blue;
-  width:100%;
-}
-.titleContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 400px;
-  border:2px solid red;
-  width:80%;
+  margin-left: auto;
 }
 h2 {
   color: #ffeead;
+  text-shadow: 
+    2px 2px 0 #a66e38,
+    -2px 2px 0 #a66e38,
+    2px -2px 0 #a66e38,
+    -2px -2px 0 #a66e38;
   font-size: 30px;
   margin-bottom: 20px;
+  margin-right: 20px;
 }
-.ganttChartContainer{
-  width:80%;
+.titleContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
 }
 .svgContainer {
-  
   overflow: auto;
-  border:2px solid green;
 }
-
 .processCell {
   fill: #a66e38;
-  stroke: #FFEEAD;
-}
 
+}
 .idleCell {
-  fill: #FFEEAD;
-  stroke: #a66e38;
-  border-style: 50px;
+  fill: #ffeead;
+
 }
 
 .cellText {

@@ -1,13 +1,9 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "../assets/css/ganttChart.module.css";
 import Simulation from "./Simulation";
 import Computations from "./Computations";
 
-const GanttChart = ({
-  processes,
-  ganttChartData,
-  setGanttChartData,
-}) => {
+const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [queue, setQueue] = useState([]);
@@ -157,50 +153,54 @@ const GanttChart = ({
   );
   const GanttChartSVG = ({ data, currentTime }) => {
     const containerRef = useRef(null); // Reference to the scrollable container
-    const cellWidth = 50;
+    const cellWidth = 20;
     const cellHeight = 40;
     const totalTime = data[data.length - 1].end;
     const margin = { left: 25, right: 25 };
     const svgWidth = (totalTime + 1) * cellWidth;
     const borderRadius = 10;
-    const [scrollPosition, setScrollPosition] = useState(0);  // Track scroll position state
-  
+    const [scrollPosition, setScrollPosition] = useState(0); // Track scroll position state
+
     const smoothScroll = () => {
       if (containerRef.current) {
-        const targetScrollPos = currentTime * cellWidth - containerRef.current.offsetWidth / 2;
+        const targetScrollPos =
+          currentTime * cellWidth - containerRef.current.offsetWidth / 2;
         const maxScroll = svgWidth - containerRef.current.offsetWidth;
-        const finalScrollPos = Math.min(Math.max(targetScrollPos, 0), maxScroll);
-  
+        const finalScrollPos = Math.min(
+          Math.max(targetScrollPos, 0),
+          maxScroll
+        );
+
         // Only set scroll position if it has changed, to avoid unnecessary reflows
         if (scrollPosition !== finalScrollPos) {
-          setScrollPosition(finalScrollPos);  // Update scroll position only when needed
+          setScrollPosition(finalScrollPos); // Update scroll position only when needed
         }
       }
     };
-  
+
     useEffect(() => {
       if (currentTime !== 0) {
         // Request smooth scroll at the next animation frame
         requestAnimationFrame(smoothScroll);
       }
     }, [currentTime, scrollPosition]); // Update scroll position when currentTime changes
-  
+
     useEffect(() => {
       // Apply the scroll position when it's updated
       if (containerRef.current && scrollPosition !== 0) {
         containerRef.current.scrollTo({
           left: scrollPosition,
-          behavior: 'smooth',  // Ensure smooth scrolling
+          behavior: "smooth", // Ensure smooth scrolling
         });
       }
-    }, [scrollPosition]);  // Only apply scroll when the position is updated
-  
+    }, [scrollPosition]); // Only apply scroll when the position is updated
+
     return (
       <div
         className={styles.svgContainer}
         ref={containerRef}
         style={{
-          overflowX: isSimulating ? 'hidden' : 'auto',  // Conditionally hide or show scrollbar
+          overflowX: isSimulating ? "hidden" : "auto", // Conditionally hide or show scrollbar
         }}
       >
         <svg width={svgWidth} height={cellHeight * 2}>
@@ -214,11 +214,16 @@ const GanttChart = ({
                   height={cellHeight}
                   rx={borderRadius}
                   ry={borderRadius}
-                  className={item.label === "X" ? styles.idleCell : styles.processCell}
+                  className={
+                    item.label === "X" ? styles.idleCell : styles.processCell
+                  }
                   style={{ fillOpacity: currentTime >= item.start ? 1 : 0.3 }}
                 />
                 <text
-                  x={item.start * cellWidth + (item.end - item.start) * cellWidth / 2}
+                  x={
+                    item.start * cellWidth +
+                    ((item.end - item.start) * cellWidth) / 2
+                  }
                   y={cellHeight / 2}
                   textAnchor="middle"
                   dominantBaseline="middle"
@@ -263,8 +268,6 @@ const GanttChart = ({
       </div>
     );
   };
-  
-  
 
   return (
     <div className={styles.mainContainer}>
@@ -273,20 +276,21 @@ const GanttChart = ({
       </button>
       <div className={styles.titleContainer}>
         <h2>Gantt Chart</h2>
-        <div className={styles.buttonContainer}>
-          <button onClick={handleSimulate} className={styles.simulateBtn} disabled={isSimulating || ganttChartData.length === 0}>
+        <div>
+          <button
+            onClick={handleSimulate}
+            className={styles.simulateBtn}
+            disabled={isSimulating || ganttChartData.length === 0}
+          >
             {isSimulating ? "Simulating..." : "Simulate"}
           </button>
         </div>
       </div>
-
+<br></br>
       {ganttChartData.length > 0 && (
-        <div className={styles.ganttChartContainer}>
-         <GanttChartSVG data={ganttChartData} currentTime={currentTime} />
-
-        </div>
+        <GanttChartSVG data={ganttChartData} currentTime={currentTime} />
       )}
-
+<br></br>
       {isSimulating && (
         <Simulation
           currentTime={currentTime}
@@ -305,7 +309,6 @@ const GanttChart = ({
         />
       )}
       <Computations processes={processes} ganttChartData={ganttChartData} />
-
     </div>
   );
 };
