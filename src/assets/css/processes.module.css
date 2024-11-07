@@ -39,19 +39,43 @@ tbody td {
   border-bottom: none;
 }
 
+.actionBtnsHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.actionBtns {
+  border-style: none;
+  background-color: transparent;
+  color: #ffeead;
+}
+
+.actionBtns:hover {
+  color: #ffad60;
+}
+
+.actionBtnsTooltip {
+  background-color: #ffeead;
+  color: #a66e38;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {
-  width: 10px; 
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #a66e38; 
+  background: #a66e38;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffeead; 
+  background: #ffeead;
   border-radius: 5px;
-  }
+}
 
 .scrollableTbody {
   display: block;
