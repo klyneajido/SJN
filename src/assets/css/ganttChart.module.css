@@ -32,12 +32,13 @@ h2 {
 
 .processCell {
   fill: #a66e38;
-  stroke: #ebf0f5;
+  stroke: #FFEEAD;
 }
 
 .idleCell {
-  fill: #f0f0f0;
-  stroke: #718096;
+  fill: #FFEEAD;
+  stroke: #a66e38;
+  border-style: 50px;
 }
 
 .cellText {
@@ -52,7 +53,7 @@ h2 {
 
 .timelineText {
   fill: black;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .generateBtn {
