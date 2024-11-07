@@ -1,6 +1,6 @@
 .tableContainer {
   width: 330px;
-  margin: auto;
+  /* margin: auto; */
   display: grid;
   row-gap: 3px;
 }
@@ -75,18 +75,6 @@ tbody td {
 ::-webkit-scrollbar-thumb {
   background: #ffeead;
   border-radius: 5px;
-}
-
-.scrollableTbody {
-  display: block;
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.scrollableTbody tr {
-  display: table;
-  table-layout: fixed;
 }
 
 thead,

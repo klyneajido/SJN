@@ -1,18 +1,18 @@
 .simulationContainer{
-    border:2px solid red;
-    width:80%;
+    margin-bottom: 20px;
+    color: #a66e38;
 }
 .queueItem {
     padding: 5px;
     margin: 2px;
     display: inline-block;
     background-color: #ddd;
-    color: #333;
+    color: #473b22;
     border-radius: 4px;
   }
   
   .completedProcess {
-    background-color: #a8d5a8; /* Light green for completed processes */
-    color: #fff; /* White text for contrast */
+    background-color: #74c974; /* Light green for completed processes */
+    color: #2e6e2e; /* White text for contrast */
   }
   

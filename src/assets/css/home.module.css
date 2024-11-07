@@ -15,19 +15,35 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   margin: auto;
-  padding: 50px;
+  padding: 20px;
 }
-.outputContainer {
+.contentContainer {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+}
+.leftContainer {
   display: flex;
-  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: rgba(255, 173, 96, .9);
+  padding: 10px;
+  height: auto;
+}
+.rightContainer {
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border-radius: 10px;
-  background-color: #a66e38;
-  padding: 20px;
+  background-color: rgba(255, 173, 96, .9);
+  padding: 10px;
+  height: 100%;
+  overflow-x: auto;
 }
 .container {
   display: flex;
@@ -36,6 +52,11 @@ input {
 .title {
   font-size: 50px;
   color: #ffeead;
+  text-shadow: 
+    2px 2px 0 #a66e38,
+    -2px 2px 0 #a66e38,
+    2px -2px 0 #a66e38,
+    -2px -2px 0 #a66e38;
 }
 .inputContainer {
   margin-bottom: 10px;

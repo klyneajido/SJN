@@ -11,7 +11,7 @@ export default function Processes({
   handleDeleteProcess,
   handleEditProcess 
 }) {
-  const isScrollable = processes.length > 10;
+  // const isScrollable = processes.length > 10;
   
   const renderTooltip = (text) => (props) => (
     <Tooltip
@@ -43,7 +43,7 @@ export default function Processes({
             <th>Action</th>
           </tr>
         </thead>
-        <tbody className={isScrollable ? styles.scrollableTbody : ""}>
+        <tbody>
           {processes.map((process) => (
             <tr key={process.process}>
               <td>P{process.process}</td>
