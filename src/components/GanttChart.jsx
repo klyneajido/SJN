@@ -78,17 +78,23 @@ const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
       const timer = setInterval(() => {
         setCurrentTime((prevTime) => {
           const nextTime = prevTime + 1;
+          
+          // Check if next time exceeds the last process's end time in ganttChartData
           if (nextTime > ganttChartData[ganttChartData.length - 1].end) {
-            clearInterval(timer);
-            setIsSimulating(false);
+            clearInterval(timer); // Stop the simulation by clearing the interval
+            setIsSimulating(false); // Mark simulation as ended
+            return prevTime; // Return previous time without incrementing it further
           }
-          return nextTime;
+  
+          return nextTime; // Increment time as usual if simulation continues
         });
-      }, 800);
-
-      return () => clearInterval(timer);
+      }, 800); // Adjusted timing for the simulation interval
+  
+      return () => clearInterval(timer); // Cleanup the interval on component unmount
     }
   }, [isSimulating, ganttChartData]);
+  
+  
 
   useEffect(() => {
     if (isSimulating) {
@@ -153,7 +159,7 @@ const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
   );
   const GanttChartSVG = ({ data, currentTime }) => {
     const containerRef = useRef(null); // Reference to the scrollable container
-    const cellWidth = 20;
+    const cellWidth = 30;
     const cellHeight = 40;
     const totalTime = data[data.length - 1].end;
     const margin = { left: 25, right: 25 };
@@ -200,7 +206,8 @@ const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
         className={styles.svgContainer}
         ref={containerRef}
         style={{
-          overflowX: isSimulating ? "hidden" : "auto", // Conditionally hide or show scrollbar
+          overflowX: isSimulating ? "hidden" : "auto",
+          width:"900px" // Conditionally hide or show scrollbar
         }}
       >
         <svg width={svgWidth} height={cellHeight * 2}>
@@ -277,13 +284,13 @@ const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
       <div className={styles.titleContainer}>
         <h2>Gantt Chart</h2>
         <div>
-          <button
+          {/* <button
             onClick={handleSimulate}
             className={styles.simulateBtn}
             disabled={isSimulating || ganttChartData.length === 0}
           >
             {isSimulating ? "Simulating..." : "Simulate"}
-          </button>
+          </button> */}
         </div>
       </div>
 <br></br>

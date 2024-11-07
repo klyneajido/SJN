@@ -11,8 +11,8 @@
     border-radius: 4px;
   }
   
-  .completedProcess {
-    background-color: #74c974; /* Light green for completed processes */
-    color: #2e6e2e; /* White text for contrast */
+  .inProgressProcess {
+    background-color: yellow; /* You can choose any color */
+    font-weight: bold;
   }
   
