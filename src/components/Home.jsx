@@ -166,9 +166,9 @@ export default function Home() {
 
   return (
     <div className={styles.mainContainer}>
-      <h2 className={styles.title}>Shortest Job Next!</h2>
+      {/* <h2 className={styles.title}>Shortest Job Next!</h2> */}
 
-      <form>
+      <form> 
         <div className={styles.inputContainer}>
           <p>
             <label>Arrival Time: </label>{" "}
@@ -197,6 +197,7 @@ export default function Home() {
         </button>
       </form>
       
+      <div className={styles.outputContainer}>
       <Processes 
         processes={processes} 
         handleClearTable={handleClearTable}
@@ -209,6 +210,8 @@ export default function Home() {
         ganttChartData={ganttChartData} 
         setGanttChartData={setGanttChartData}
       />
+      </div>
+      
 
       {isAlertOpen && (
         <CustomAlert

@@ -1,66 +1,84 @@
-form  { display: table;      }
-p     { display: table-row;  }
-label { display: table-cell; }
-input { display: table-cell; }
+form {
+  display: table;
+}
+p {
+  display: table-row;
+}
+label {
+  display: table-cell;
+}
+input {
+  display: table-cell;
+}
 
 .mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+  margin: auto;
+  padding: 50px;
 }
-.container{
+.outputContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #a66e38;
+  padding: 20px;
+}
+.container {
   display: flex;
   flex-direction: row;
 }
-.title{
-    font-size: 50px;
-    color:  #FFEEAD;
+.title {
+  font-size: 50px;
+  color: #ffeead;
 }
 .inputContainer {
   margin-bottom: 10px;
 }
-.at{
-    margin-bottom: 10px;
+.at {
+  margin-bottom: 10px;
 }
-form{
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    background-color: #A66E38;
-    padding: 20px;
-    margin-bottom: 20px;
+form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #a66e38;
+  padding: 20px;
+  margin-bottom: 20px;
 }
-label{
-    text-align: left;
-    color: #FFEEAD;
+label {
+  text-align: left;
+  color: #ffeead;
 }
 input {
   width: 150px;
-  margin:10px;
+  margin: 10px;
   padding: 10px;
   border-radius: 10px;
   border-style: none;
-  color:#a66e38;
-  background-color: #FFAD60;
+  color: #a66e38;
+  background-color: #ffad60;
   font-family: "Fredoka", sans-serif;
   font-size: 20px;
 }
 ::placeholder {
   color: rgba(166, 109, 56, 0.5);
 }
-.addProcessBtn{
-    padding:15px 20px;
-    background-color: #FFAD60;
-    border-radius: 40px;
-    margin-bottom: 10px;
-    border-style: none;
-    color: #A66E38;
-    font-size: 20px;
+.addProcessBtn {
+  padding: 15px 20px;
+  background-color: #ffad60;
+  border-radius: 40px;
+  margin-bottom: 10px;
+  border-style: none;
+  color: #a66e38;
+  font-size: 20px;
 }
 
-
-/* Add these styles to your home.module.css file */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -75,9 +93,11 @@ input {
 }
 
 .modal {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  background: #ffeead;
+  padding: 30px;
+  border-radius: 5px;
+  text-align: center;
+  color: #a66e38;
   min-width: 300px;
 }
 
@@ -100,13 +120,15 @@ input {
 .inputGroup label {
   display: block;
   margin-bottom: 5px;
+  color: #a66e38;
 }
 
 .inputGroup input {
-  width: 100%;
+  width: 90%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border-style: none;
   border-radius: 4px;
+  margin: auto;
 }
 
 .modalFooter {
@@ -119,24 +141,16 @@ input {
 .cancelBtn {
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #a66e38;
+  color: #ffeead;
 }
 
-.updateBtn {
-  background-color: #4CAF50;
-  color: white;
-}
-
+.cancelBtn:hover,
 .updateBtn:hover {
-  background-color: #45a049;
+  background-color: #946131;
+    color: #eedea0;
 }
 
-.cancelBtn {
-  background-color: #f44336;
-  color: white;
-}
-
-.cancelBtn:hover {
-  background-color: #da190b;
-}

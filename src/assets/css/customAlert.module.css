@@ -26,5 +26,11 @@
     border-radius: 5px;
     background-color: #a66e38;
     color: #ffeead;
+    cursor: pointer;
+  }
+
+  .modalContent button:hover {
+    background-color: #946131;
+    color: #eedea0;
   }
   
