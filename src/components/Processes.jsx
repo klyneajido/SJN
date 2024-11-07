@@ -1,10 +1,28 @@
 import styles from "../assets/css/processes.module.css";
-import React, { useState } from 'react';
-export default function Processes({ processes, handleClearTable }) {
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons/faDeleteLeft";
+
+export default function Processes({ 
+  processes, 
+  handleClearTable, 
+  handleDeleteProcess,
+  handleEditProcess 
+}) {
   const isScrollable = processes.length > 10;
-  const [showButton, setShowButton] = useState(false);
-  const handleMouseEnter = () => setShowButton(true);
-  const handleMouseLeave = () => setShowButton(false);
+  
+  const renderTooltip = (text) => (props) => (
+    <Tooltip
+      id="button-tooltip"
+      {...props}
+      className={styles.actionBtnsTooltip}
+    >
+      {text}
+    </Tooltip>
+  );
+
   return (
     <div className={styles.tableContainer}>
       <div className={styles.tableBtnContainer}>
@@ -22,16 +40,41 @@ export default function Processes({ processes, handleClearTable }) {
             <th>Process</th>
             <th>Arrival Time</th>
             <th>Burst Time</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody className={isScrollable ? styles.scrollableTbody : ""}>
           {processes.map((process) => (
-            <tr key={process.id} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              {showButton && <button>Delete</button>}
-              {showButton && <button>Edit</button>}
+            <tr key={process.process}>
               <td>P{process.process}</td>
               <td>{process.arrivalTime}</td>
               <td>{process.burstTime}</td>
+              <td>
+                <div className={styles.actionBtnsHolder}>
+                  <OverlayTrigger
+                    placement="left"
+                    overlay={renderTooltip("Edit")}
+                  >
+                    <button 
+                      className={styles.actionBtns}
+                      onClick={() => handleEditProcess(process)}
+                    >
+                      <FontAwesomeIcon icon={faEdit} className="mr-2" />
+                    </button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={renderTooltip("Delete")}
+                  >
+                    <button 
+                      className={styles.actionBtns}
+                      onClick={() => handleDeleteProcess(process)}
+                    >
+                      <FontAwesomeIcon icon={faDeleteLeft} />
+                    </button>
+                  </OverlayTrigger>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -39,28 +82,3 @@ export default function Processes({ processes, handleClearTable }) {
     </div>
   );
 }
-
-// TableComponent.js
-// import React, { useState } from 'react';
-
-// const TableComponent = () => {
-//   const [showButton, setShowButton] = useState(false);
-
-//   const handleMouseEnter = () => setShowButton(true);
-//   const handleMouseLeave = () => setShowButton(false);
-
-//   return (
-//     <table>
-//       <tbody>
-//         {rows.map((row) => (
-//           <tr key={row.id}>
-//             <td onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-//               {row.data}
-//               {showButton && <button>Hovered!</button>}
-//             </td>
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   );
-// };
