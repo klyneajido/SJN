@@ -3,7 +3,6 @@ import Processes from "./Processes";
 import GanttChart from "./GanttChart";
 import CustomAlert from "./CustomAlert";
 import styles from "../assets/css/home.module.css";
-
 export default function Home() {
   const [processes, setProcesses] = useState([]);
   const [arrivalTime, setArrivalTime] = useState("2 8 14 20 26");

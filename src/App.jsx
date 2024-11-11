@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Home from './components/Home'
+import LoadingScreen from './components/LoadingScreen'
 import './App.css'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
   <div>
-    <Home />
+    <LoadingScreen />
   </div>
   )
 }

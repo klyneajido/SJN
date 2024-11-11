@@ -1,0 +1,30 @@
+.loadingScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #e2944b;
+    color: white;
+}
+
+
+h2{
+    font-size: 3rem;
+}   
+img{
+    top:100px;
+    width:500px;
+    height: auto;
+    cursor: pointer;
+    pointer-events: none;
+}
+button{
+    background: none;
+    border:none;
+
+}
+
+.mainContent {
+    padding: 20px;
+}

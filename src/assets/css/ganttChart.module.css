@@ -74,7 +74,13 @@ h2 {
   background-color: #8b5e2b;
 }
 
-.simulateBtn {
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stepsBtn {
   padding: 5px 20px;
   background-color: #a66e38;
   border-radius: 40px;
@@ -87,6 +93,42 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-.simulateBtn:hover {
+.stepsBtn:hover {
   background-color: #8b5e2b;
+}
+
+.stepsBtn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.stepsContainer {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.stepItem {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stepItem h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.stepItem p {
+  margin: 0.5rem 0;
+}
+
+.stepItem hr {
+  margin: 1rem 0 0 0;
+  border: none;
+  border-top: 1px solid #eee;
 }

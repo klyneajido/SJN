@@ -25,6 +25,8 @@ export default function Processes({
 
   return (
     <div className={styles.tableContainer}>
+
+
       <div className={styles.tableBtnContainer}>
         <button
           className={styles.clearProcessTableBtn}
