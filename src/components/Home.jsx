@@ -5,9 +5,13 @@ import CustomAlert from "./CustomAlert";
 import styles from "../assets/css/home.module.css";
 export default function Home() {
   const [processes, setProcesses] = useState([]);
+  // sample arrivl time: "2 8 14 20 26"
   const [arrivalTime, setArrivalTime] = useState("2 8 14 20 26");
-  const [burstTime, setBurstTime] = useState("5 2 6 3 4");
+  // sample burst time: "5 2 6 3 4"
+  const [burstTime, setBurstTime] = useState("5 2 6 3 4"); 
   const [ganttChartData, setGanttChartData] = useState([]);
+  const [showSteps, setShowSteps] = useState(false);
+  const [steps, setSteps] = useState([]);
   const [isAlertOpen, setAlertOpen] = useState(false);
   const [isDeleteAlertOpen, setDeleteAlertOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -81,6 +85,8 @@ export default function Home() {
   const handleClearTableConfirmClear = () => {
     setProcesses([]);
     setGanttChartData([]);
+    setSteps([])
+    setShowSteps(false)
     setAlertOpen(false);
   };
 
@@ -212,6 +218,10 @@ export default function Home() {
             processes={processes}
             ganttChartData={ganttChartData}
             setGanttChartData={setGanttChartData}
+            showSteps={showSteps}
+            steps={steps}
+            setShowSteps={setShowSteps}
+            setSteps={setSteps}
           />
         </div>
       </div>

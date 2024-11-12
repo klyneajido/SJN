@@ -103,6 +103,7 @@ h2 {
 }
 
 .stepsContainer {
+  width: 95%;
   margin-top: 2rem;
   padding: 1rem;
   border: 1px solid #ddd;

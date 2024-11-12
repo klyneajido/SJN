@@ -6,9 +6,7 @@ import GanttChartSVG from "./GanttChartSVG";
 import StepByStepGuide from "./StepByStepGuide";
 import Computations from "./Computations";
 
-const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
-  const [showSteps, setShowSteps] = useState(false);
-  const [steps, setSteps] = useState([]);
+const GanttChart = ({ processes, ganttChartData, setGanttChartData, showSteps, setShowSteps, steps, setSteps }) => {
 
   function generateGanttChart() {
     let currentTime = 0;
@@ -155,9 +153,9 @@ const GanttChart = ({ processes, ganttChartData, setGanttChartData }) => {
       </div>
       <br />
       {ganttChartData.length > 0 && <GanttChartSVG data={ganttChartData} />}
-      <br />
       {showSteps && <StepByStepGuide steps={steps} />}
       <Computations processes={processes} ganttChartData={ganttChartData} />
+      <br />
     </div>
   );
 };
