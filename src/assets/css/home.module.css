@@ -45,7 +45,6 @@ input {
   background-color: rgba(255, 173, 96, .9);
   padding: 10px;
   height: 100%;
-  overflow-x: auto;
 }
 .container {
   display: flex;
