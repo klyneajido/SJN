@@ -10,7 +10,7 @@ hr {
   align-items: center;
   flex-direction: column;
   margin-left: auto;
-  max-width: 100%; /* Limit main container width */
+  max-width: 100%; 
 }
 h2 {
   color: #ffeead;
@@ -32,13 +32,12 @@ h2 {
 }
 .svgContainer {
   width: 100%;
-  max-width: 100%; /* Constrain container width */
-  overflow: auto; /* Enable horizontal scroll */
+  max-width: 100%; 
+  overflow: auto; 
   box-sizing: border-box;
 }
 @media (max-width: 1250px) {
   .mainContainer {
-    /* width: 100%; */
     padding: 10px;
   }
   .svgContainer {
@@ -48,6 +47,7 @@ h2 {
     box-sizing: border-box;
   }
 }
+
 .processCell {
   fill: #a66e38;
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Home from './Home';
-import styles from '../assets/css/loadingScreen.module.css'; 
-import title from '../assets/svg/loadingScreen.gif';
-import unclicked from '../assets/img/2.gif';
-import clicked from '../assets/img/3.gif';
+import React, { useState } from "react";
+import Home from "./Home";
+import styles from "../assets/css/loadingScreen.module.css";
+import title from "../assets/svg/loadingScreen.gif";
+import unclicked from "../assets/img/2.gif";
+import clicked from "../assets/img/3.gif";
 import { motion } from "framer-motion";
 
 export default function LoadingScreen() {
@@ -11,7 +11,7 @@ export default function LoadingScreen() {
   const [buttonGif, setButtonGif] = useState(unclicked); // Track which GIF to display
 
   const handleStart = () => {
-    const audio = document.getElementById('background-audio');
+    const audio = document.getElementById("background-audio");
     audio.volume = 0.2; // Set volume to 20% of the maximum
     audio.play().catch((error) => {
       console.log("Autoplay failed:", error);
@@ -32,22 +32,24 @@ export default function LoadingScreen() {
   return (
     <div>
       {isLoading ? (
-        <div className={styles.loadingScreen}>
-          <motion.div
-            className="box"
-            initial={{ opacity: 0, scale: 0.5 }} // Initial scale and opacity
-            animate={{ opacity: 1, scale: 1 }} // Animate to full opacity and normal scale
-            transition={{ duration: 1 }} // Duration of the animation
-          />
-          <img src={title} alt="Loading" />
-          <button
-            className={styles.buttonStart}
-            onClick={handleStart}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img src={buttonGif} alt="" />
-          </button>
+        <div className={styles.loadingScreenMain}>
+          <div className={styles.loadingScreen}>
+            <motion.div
+              className="box"
+              initial={{ opacity: 0, scale: 0.5 }} // Initial scale and opacity
+              animate={{ opacity: 1, scale: 1 }} // Animate to full opacity and normal scale
+              transition={{ duration: 1 }} // Duration of the animation
+            />
+            <img src={title} alt="Loading" />
+            <button
+              className={styles.buttonStart}
+              onClick={handleStart}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <img src={buttonGif} alt="" />
+            </button>
+          </div>
         </div>
       ) : (
         // Use Framer Motion to animate the Home component transition
@@ -61,11 +63,7 @@ export default function LoadingScreen() {
         </motion.div>
       )}
 
-      <audio
-        id="background-audio"
-        loop
-        style={{ display: 'none' }}
-      >
+      <audio id="background-audio" loop style={{ display: "none" }}>
         <source src="../../boba.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
