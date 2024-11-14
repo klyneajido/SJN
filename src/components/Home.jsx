@@ -6,12 +6,13 @@ import styles from "../assets/css/home.module.css";
 export default function Home() {
   const [processes, setProcesses] = useState([]);
   // sample arrivl time: "2 8 14 20 26"
-  const [arrivalTime, setArrivalTime] = useState("2 8 14 20 26");
+  const [arrivalTime, setArrivalTime] = useState("");
   // sample burst time: "5 2 6 3 4"
-  const [burstTime, setBurstTime] = useState("5 2 6 3 4"); 
+  const [burstTime, setBurstTime] = useState(""); 
   const [ganttChartData, setGanttChartData] = useState([]);
   const [showSteps, setShowSteps] = useState(false);
   const [steps, setSteps] = useState([]);
+  const [alertMessage, setAlertMessage] = useState("");
   const [isAlertOpen, setAlertOpen] = useState(false);
   const [isDeleteAlertOpen, setDeleteAlertOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -25,51 +26,60 @@ export default function Home() {
   function validateProcessValues(arrivalTime, burstTime) {
     // Check if the values are valid numbers
     if (isNaN(arrivalTime) || isNaN(burstTime)) {
-      alert("Please enter valid numbers for Arrival and Burst Times.");
+      showAlert("Please enter valid numbers for Arrival and Burst Times.");
       return false;
     }
-
+  
     // Check if values are non-negative
     if (arrivalTime < 0 || burstTime < 0) {
-      alert("Arrival Time and Burst Time must be non-negative numbers.");
+      showAlert("Arrival Time and Burst Time must be non-negative numbers.");
       return false;
     }
-
+  
     // Check if burst time is not zero
     if (burstTime === 0) {
-      alert("Burst Time must be greater than zero.");
+      showAlert("Burst Time must be greater than zero.");
       return false;
     }
-
+  
     return true;
   }
+  
+  function showAlert(message) {
+    setAlertOpen(true);
+    setAlertMessage(message);
+  }
 
-  function handleAddProcess() {
+  function handleAddProcess(event) {
     event.preventDefault();
-    const arrivalTimes = arrivalTime.split(" ").map(Number);
-    const burstTimes = burstTime.split(" ").map(Number);
-
+  
+    // Split the arrival and burst times, then filter out any empty strings
+    const arrivalTimes = arrivalTime.split(" ").filter(Boolean).map(Number);
+    const burstTimes = burstTime.split(" ").filter(Boolean).map(Number);
+  
     if (arrivalTimes.length !== burstTimes.length) {
-      alert(
-        "Arrival Times and Burst Times should have the same number of values"
-      );
+      showAlert("Arrival Times and Burst Times should have the same number of values");
       return;
     }
-    if (arrivalTimes.some(isNaN) || burstTimes.some(isNaN)) {
-      alert("Please enter valid numbers for Arrival and Burst Times.");
-      return;
+  
+    // Validate each arrival time and burst time
+    for (let i = 0; i < arrivalTimes.length; i++) {
+      if (!validateProcessValues(arrivalTimes[i], burstTimes[i])) {
+        return;
+      }
     }
+  
     const newProcesses = arrivalTimes.map((arrivalTime, index) => ({
       process: processes.length + index + 1,
       arrivalTime: Number(arrivalTime),
       burstTime: Number(burstTimes[index]),
     }));
-
+  
     setProcesses([...processes, ...newProcesses]);
     setArrivalTime("");
     setBurstTime("");
   }
-
+  
   function handleArrivalTimeChange(e) {
     setArrivalTime(e.target.value);
   }
@@ -226,14 +236,15 @@ export default function Home() {
         </div>
       </div>
 
-      {isAlertOpen && (
-        <CustomAlert
-          title="Clear Table?"
-          message="Clearing the Process Table will also clear the Gantt Chart."
-          buttons={clearTableButtons}
-          onClose={handleClearTableCloseAlert}
-        />
-      )}
+      
+    {isAlertOpen && (
+      <CustomAlert
+        title="Alert"
+        message={alertMessage}
+        buttons={[{ text: "OK", onPress: () => setAlertOpen(false) }]}
+        onClose={() => setAlertOpen(false)}
+      />
+    )}
 
       {isDeleteAlertOpen && (
         <CustomAlert
