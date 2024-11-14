@@ -66,7 +66,7 @@ export default function LoadingScreen() {
         loop
         style={{ display: 'none' }}
       >
-        <source src="../../boba.mp3" type="audio/mpeg" />
+        <source src="/boba.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
     </div>
