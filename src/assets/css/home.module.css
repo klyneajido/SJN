@@ -10,7 +10,6 @@ label {
 input {
   display: table-cell;
 }
-
 .mainContainer {
   display: flex;
   justify-content: center;
@@ -23,6 +22,14 @@ input {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 10px;
+}
+@media (max-width: 1250px) {
+  .contentContainer {
+    grid-template-columns: 1fr; 
+  }
+  .rightContainer{
+    padding: 20px;
+  }
 }
 .leftContainer {
   display: flex;
