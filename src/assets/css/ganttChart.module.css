@@ -10,7 +10,7 @@ hr {
   align-items: center;
   flex-direction: column;
   margin-left: auto;
-  
+  max-width: 100%; 
 }
 .titleContainer{
   display: flex;
@@ -36,8 +36,23 @@ h2 {
   width: 100%;
 }
 .svgContainer {
-  overflow: auto;
+  width: 100%;
+  max-width: 100%; 
+  overflow: auto; 
+  box-sizing: border-box;
 }
+@media (max-width: 1250px) {
+  .mainContainer {
+    padding: 10px;
+  }
+  .svgContainer {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+}
+
 .processCell {
   fill: #a66e38;
 
