@@ -91,7 +91,7 @@ input {
 ::placeholder {
   color: rgba(166, 109, 56, 0.5);
 }
-.addProcessBtn {
+.addProcessBtn{
   padding: 15px 20px;
   background-color: #ffad60;
   border-radius: 40px;

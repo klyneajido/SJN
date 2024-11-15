@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styles from '../assets/css/ganttChart.module.css'
 
 const AnimeVoiceReader = ({ steps }) => {
   const [voice, setVoice] = useState(null);
@@ -33,10 +34,10 @@ const AnimeVoiceReader = ({ steps }) => {
   };
 
   return (
-    <button onClick={readGuide} className="readButton" disabled={!voice}>
+    <button onClick={readGuide} className={styles.readBtn}>
       Read Step-by-Step Guide
     </button>
   );
-};
+};   
 
 export default AnimeVoiceReader;

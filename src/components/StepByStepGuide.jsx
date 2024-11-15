@@ -5,8 +5,10 @@ import AnimeVoiceReader from './AnimeVoice';
 const StepByStepGuide = ({ steps }) => {
   return (
     <div className={styles.stepsContainer}>
-      <h3>Step-by-Step Solution</h3>
-      <AnimeVoiceReader steps={steps} />
+<div className={styles.titleContainer}>
+<h3>Step-by-Step Solution</h3>
+<AnimeVoiceReader steps={steps} />
+</div>
       {steps.map((step, index) => (
         <div key={index} className={styles.stepItem}>
           <h4>Step {index + 1} (Time: {step.time})</h4>

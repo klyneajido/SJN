@@ -12,6 +12,11 @@ hr {
   margin-left: auto;
   
 }
+.titleContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 h2 {
   color: #ffeead;
   text-shadow: 
@@ -80,7 +85,7 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.stepsBtn {
+.stepsBtn{
   padding: 5px 20px;
   background-color: #a66e38;
   border-radius: 40px;
@@ -88,6 +93,19 @@ h2 {
   border: none;
   color: #ffeead;
   font-size: 15px;
+  cursor: pointer;
+  max-width: 300px;
+  transition: background-color 0.3s ease;
+}
+
+.readBtn{
+  margin-left:10px;
+  padding: 5px 20px;
+  background-color: #a66e38;
+  border-radius: 40px;
+  border: none;
+  color: #ffeead;
+  font-size: 12px;
   cursor: pointer;
   max-width: 300px;
   transition: background-color 0.3s ease;
